@@ -1,4 +1,4 @@
-from .models import Image
+from images.models import Image
 from rest_framework import viewsets
 from .serializers import ImageSerializer
 
