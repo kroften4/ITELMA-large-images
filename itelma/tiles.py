@@ -27,7 +27,7 @@ def split_image_to_tiles(input_image_path, output_dir, tile_size_x, tile_size_y)
             tile = image[y_start:y_end, x_start:x_end]
 
             # Save the tile
-            tile_filename = os.path.join(output_dir, f"tile_{y}_{x}.png")
+            tile_filename = os.path.join(output_dir, f"tile_{x}_{y}.png")
             cv2.imwrite(tile_filename, tile)
 
     del image
