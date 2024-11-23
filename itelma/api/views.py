@@ -13,37 +13,39 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = OriginalSerializer
 
 
-# class ImgUploadAPIview(APIView):
-#     authentication_classes = []
-#     permission_classes = []
-#
-#     def post(self, request):
-#         qs_serializer = OriginalSerializer(
-#             data={
-#                 "name": request.data.get("name"),
-#                 "image": request.FILES.get("media"),
-#             },
-#             context={"request": request},
-#         )
-#         if qs_serializer.is_valid():
-#             qs_serializer.save()
-#             return Response(
-#                 {
-#                     "message": "Media uploaded successfully.",
-#                     "data": qs_serializer.data
-#                 },
-#                 status=status.HTTP_200_OK
-#             )
-#         else:
-#             return Response(
-#                 {"message": qs_serializer.errors, "data": None},
-#                 status=status.HTTP_400_BAD_REQUEST
-#             )
-#
-#     def get(self, request):
-#         qs = Original.objects.all()
-#         qs_serializer = OriginalSerializer(qs, many=True)
-#         return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+class ImgUploadAPIview(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        qs_serializer = OriginalSerializer(
+            data={
+                "name": request.data.get("name"),
+                "file": request.FILES.get("file"),
+            },
+            context={"request": request},
+        )
+        if qs_serializer.is_valid():
+            qs_serializer.save()
+            # Created an original image. Now tile it up
+            # ...
+            return Response(
+                {
+                    "message": "Media uploaded successfully.",
+                    "data": qs_serializer.data
+                },
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"message": qs_serializer.errors, "data": None},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def get(self, request):
+        qs = Original.objects.all()
+        qs_serializer = OriginalSerializer(qs, many=True)
+        return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(('GET',))
