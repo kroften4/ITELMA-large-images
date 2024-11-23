@@ -20,11 +20,12 @@ def get_preview(request, img_name):
 
 def get_tile(request, img_name):
     scale = request.GET.get('scale')
-    x = request.GET.get('x')
-    y = request.GET.get('y')
+    x = int(request.GET.get('x'))
+    y = int(request.GET.get('y'))
     img = Image.objects.get(pk=img_name)
     width = img.width
     size_x = ceil(width / 2000)
-    id = y * size_x + x
-    preview_image = open(Path(IMAGES_DIR, img_name, f"tiles_{scale}", f"t{id}.png"), 'rb')
+    tile_id = y * size_x + x
+    print(img_name, scale, x, y, width, size_x, tile_id)
+    preview_image = open(Path(IMAGES_DIR, img_name, f"tiles_{scale}", f"t{tile_id}.png"), 'rb')
     return HttpResponse(preview_image, content_type="image/png")
