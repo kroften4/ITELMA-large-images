@@ -26,6 +26,5 @@ def get_tile(request, img_name):
     width = img.width
     size_x = ceil(width / 2000)
     tile_id = y * size_x + x
-    print(img_name, scale, x, y, width, size_x, tile_id)
     preview_image = open(Path(IMAGES_DIR, img_name, f"tiles_{scale}", f"t{tile_id}.png"), 'rb')
     return HttpResponse(preview_image, content_type="image/png")
