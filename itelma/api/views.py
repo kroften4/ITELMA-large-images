@@ -4,6 +4,8 @@ from .serializers import ImageSerializer
 from pathlib import Path
 from django.http import HttpResponse
 from itelma.settings import IMAGES_DIR
+from api.models import Image
+from math import ceil
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -13,4 +15,17 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 def get_preview(request, img_name):
     preview_image = open(Path(IMAGES_DIR, img_name, "preview.png"), 'rb')
+    return HttpResponse(preview_image, content_type="image/png")
+
+
+def get_tile(request, img_name):
+    scale = request.GET.get('scale')
+    x = int(request.GET.get('x'))
+    y = int(request.GET.get('y'))
+    img = Image.objects.get(pk=img_name)
+    width = img.width
+    size_x = ceil(width / 2000)
+    tile_id = y * size_x + x
+    print(img_name, scale, x, y, width, size_x, tile_id)
+    preview_image = open(Path(IMAGES_DIR, img_name, f"tiles_{scale}", f"t{tile_id}.png"), 'rb')
     return HttpResponse(preview_image, content_type="image/png")
