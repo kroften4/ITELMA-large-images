@@ -7,6 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'list', views.ImageViewSet)
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('previews/<str:img_name>/', views.get_preview)
 ]
