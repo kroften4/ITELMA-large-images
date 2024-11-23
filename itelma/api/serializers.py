@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Image
+from .models import Original
 
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Image
+        model = Original
         fields = ['name', 'last_opened']

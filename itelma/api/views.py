@@ -1,15 +1,15 @@
-from .models import Image
+from .models import Original
 from rest_framework import viewsets
 
 from .serializers import ImageSerializer
 from pathlib import Path
 from django.http import HttpResponse
-from api.models import Image
+from api.models import Original
 from math import ceil
 
 
 class ImageViewSet(viewsets.ModelViewSet):
-    queryset = Image.objects.all().order_by('-last_opened')
+    queryset = Original.objects.all().order_by('-last_opened')
     serializer_class = ImageSerializer
 
 
