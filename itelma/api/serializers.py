@@ -1,8 +1,20 @@
 from rest_framework import serializers
-from .models import Original
+from .models import Original, Preview, ScaleTile
 
 
-class ImageSerializer(serializers.ModelSerializer):
+class OriginalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Original
-        fields = ['name', 'last_opened']
+        fields = '__all__'
+
+
+class PreviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Preview
+        fields = '__all__'
+
+
+class ScaleTileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScaleTile
+        fields = '__all__'

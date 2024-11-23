@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 def original_upload_path(instance, filename):
@@ -8,7 +9,7 @@ def original_upload_path(instance, filename):
 
 class Original(models.Model):
     name = models.CharField(primary_key=True, max_length=100)
-    last_opened = models.DateTimeField()
+    last_opened = models.DateTimeField(default=timezone.now)
     file = models.ImageField(upload_to=original_upload_path)
 
 
@@ -20,6 +21,7 @@ def preview_upload_path(instance, filename):
 class Preview(models.Model):
     file = models.ImageField(upload_to=preview_upload_path)
     original = models.ForeignKey(Original, on_delete=models.CASCADE)
+    name = original.name
 
 
 def tile_upload_path(instance, filename):
@@ -32,4 +34,5 @@ class ScaleTile(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     original = models.ForeignKey(Original, on_delete=models.CASCADE)
+    name = original.name
     file = models.ImageField(upload_to=tile_upload_path)
