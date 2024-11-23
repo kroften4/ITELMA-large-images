@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, renderer_classes
 from .serializers import OriginalSerializer, PreviewSerializer, ScaleTileSerializer
 from api.models import Original, Preview, ScaleTile
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
+from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -47,7 +47,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 
 @api_view(('GET',))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+@renderer_classes((JSONRenderer, BrowsableAPIRenderer))
 def get_preview(request, img_name):
     qs = Preview.objects.get(original__name=img_name)
     qs_serializer = PreviewSerializer(qs)
@@ -55,7 +55,7 @@ def get_preview(request, img_name):
 
 
 @api_view(('GET',))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+@renderer_classes((JSONRenderer, BrowsableAPIRenderer))
 def get_tile(request, img_name):
     x = request.GET.get('x')
     y = request.GET.get('y')
