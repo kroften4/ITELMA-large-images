@@ -26,9 +26,27 @@ class ImgUploadAPIview(APIView):
             context={"request": request},
         )
         if qs_serializer.is_valid():
-            qs_serializer.save()
-            # Created an original image. Now tile it up
-            # ...
+            original = qs_serializer.save()
+
+            # Create tiles
+            for scale in range(3):
+                for x in range(10):
+                    for y in range(10):
+                        # create tile file
+                        # ...
+
+                        tile = ScaleTile(x=x, y=y, original=original)
+
+                        # add existing file path
+                        tile.file.name = f"images/{original.name}/scale_{scale}/t_{x}_{y}.png"
+
+                        tile.save()
+
+            # Create preview
+            preview = Preview(original=original)
+            preview.file.name = f"images/{original.name}/preview.png"
+            preview.save()
+
             return Response(
                 {
                     "message": "Media uploaded successfully.",
