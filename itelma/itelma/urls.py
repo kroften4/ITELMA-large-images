@@ -13,5 +13,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('previews/<str:img_name>', views.get_preview),
-    path('tiles/<str:img_name>', views.get_tile)
+    path('tiles/<str:img_name>', views.get_tile),
+    path('upload/', views.ImgUploadAPIview.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
