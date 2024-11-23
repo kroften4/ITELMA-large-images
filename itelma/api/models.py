@@ -21,7 +21,7 @@ def preview_upload_path(instance, filename):
 class Preview(models.Model):
     file = models.ImageField(upload_to=preview_upload_path)
     original = models.ForeignKey(Original, on_delete=models.CASCADE)
-    name = original.name
+    name = models.CharField(default=original.name, max_length=100)
 
 
 def tile_upload_path(instance, filename):
@@ -34,5 +34,5 @@ class ScaleTile(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     original = models.ForeignKey(Original, on_delete=models.CASCADE)
-    name = original.name
+    name = models.CharField(default=original.name, max_length=100)
     file = models.ImageField(upload_to=tile_upload_path)
